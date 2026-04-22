@@ -15,3 +15,4 @@ def test_parabank_flow():
     success_text = transfer_funds(wait)
     assert "Transfer Complete" in success_text
     print("transfer complete passed")
+    driver.quit()
