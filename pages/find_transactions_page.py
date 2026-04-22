@@ -2,20 +2,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.login_page import LoginPage
-import time
 
 USERNAME = "john"
 PASSWORD = "demo"
 
 
-def test_find_transactions_invalid_date_and_exit(driver):
+def test_find_transactions_invalid_date_only(driver):
     wait = WebDriverWait(driver, 10)
     login_page = LoginPage(driver)
 
     # 1️⃣ Login
     login_page.login(USERNAME, PASSWORD)
 
-    # 2️⃣ Open Find Transactions
+    # 2️⃣ Navigate to Find Transactions
     driver.find_element(By.LINK_TEXT, "Find Transactions").click()
 
     wait.until(
@@ -25,40 +24,21 @@ def test_find_transactions_invalid_date_and_exit(driver):
         )
     )
 
-    # 3️⃣ Find by Transaction ID (dummy value)
-    tx_id = driver.find_element(By.NAME, "criteria.transactionId")
-    tx_id.clear()
-    tx_id.send_keys("999999")
-    driver.find_elements(By.XPATH, "//input[@value='Find Transactions']")[0].click()
-
-    time.sleep(1)  # intentional short pause, no wait
-
-    # 4️⃣ Find by Amount (dummy value)
-    amount = driver.find_element(By.NAME, "criteria.amount")
-    amount.clear()
-    amount.send_keys("100")
-    driver.find_elements(By.XPATH, "//input[@value='Find Transactions']")[3].click()
-
-    time.sleep(1)
-
-    # 5️⃣ Find by Date – INVALID DATE
-    date_field = driver.find_element(By.NAME, "criteria.onDate")
+    # 3️⃣ Enter INVALID date (wrong month, valid format)
+    date_field = wait.until(
+        EC.presence_of_element_located((By.ID, "transactionDate"))
+    )
     date_field.clear()
+    date_field.send_keys("demo")  # ❌ invalid month
 
-    # ❌ Invalid date (wrong month but correct format)
-    date_field.send_keys("13-10-2024")
+    # 4️⃣ Click Find by Date
+    driver.find_element(By.ID, "findByDate").click()
 
-    # Click Find by Date button
-    driver.find_elements(By.XPATH, "//input[@value='Find Transactions']")[1].click()
+    # 5️⃣ Validate error message is shown
+    error_message = wait.until(
+        EC.visibility_of_element_located((By.ID, "transactionDateError"))
+    ).text
 
-    # 6️⃣ Validation check (DO NOT WAIT)
-    page_text = driver.page_source.lower()
+    assert error_message != "", "Expected validation error message was not shown"
 
-    # ParaBank may or may not show a message; both are valid outcomes
-    assert (
-        "invalid" in page_text
-        or "find transactions" in page_text
-    ), "Date validation did not trigger"
-
-    # ✅ Test ends cleanly here
-    print("Invalid date entered, validation triggered. Test completed.")
+    print("Invalid date validation triggered successfully.")

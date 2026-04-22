@@ -29,7 +29,7 @@ def test_find_transactions_invalid_id_only(driver):
         EC.presence_of_element_located((By.ID, "transactionId"))
     )
     date_field.clear()
-    date_field.send_keys("demo")  # ❌ invalid month
+    date_field.send_keys("demo")
 
     # 4️⃣ Click Find by Date
     driver.find_element(By.ID, "findById").click()
