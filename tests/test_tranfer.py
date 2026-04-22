@@ -3,7 +3,6 @@ from pages.overview import login
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 
-
 def test_parabank_flow():
     driver = webdriver.Chrome()
     driver.maximize_window()
