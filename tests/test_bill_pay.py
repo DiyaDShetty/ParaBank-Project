@@ -1,8 +1,8 @@
 from pages.login_page import LoginPage
 from pages.bill_pay_page import BillPayPage
 
-USERNAME = "diyashetty_01"
-PASSWORD = "Test@123"
+USERNAME = "john"
+PASSWORD = "demo"
 
 
 def test_pay_bill_valid(driver):
