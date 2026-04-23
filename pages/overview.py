@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 def login(wait):
-    wait.until(EC.visibility_of_element_located((By.NAME, "username"))).send_keys("diyashetty_01")
-    wait.until(EC.visibility_of_element_located((By.NAME, "password"))).send_keys("Test@123")
+    wait.until(EC.visibility_of_element_located((By.NAME, "username"))).send_keys("john")
+    wait.until(EC.visibility_of_element_located((By.NAME, "password"))).send_keys("demo")
     wait.until(EC.element_to_be_clickable((By.XPATH, "(//input)[3]"))).click()
 
 def account_overview(wait):
