@@ -3,7 +3,6 @@ from pages.overview import login
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 
-
 def test_parabank_flow():
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -15,3 +14,4 @@ def test_parabank_flow():
     success_text = transfer_funds(wait)
     assert "Transfer Complete" in success_text
     print("transfer complete passed")
+    driver.quit()

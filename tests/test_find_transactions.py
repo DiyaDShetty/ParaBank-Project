@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 
 from pages.find_transaction_login_page import LoginPage
 import pages.find_transactions_page
+from pages.find_transactions_by_date_page import FindTransactionsPage
+
 
 def setup_driver():
     driver = webdriver.Chrome()  # Ensure ChromeDriver is installed
