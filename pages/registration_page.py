@@ -34,9 +34,9 @@ class RegistrationPage(BasePage):
         self.type(self.SSN, "123456789")
 
         # Deliberate reuse to demonstrate failure/validation behavior
-        self.type(self.USERNAME, "diyashetty_01")
-        self.type(self.PASSWORD, "Test@123")
-        self.type(self.CONFIRM_PASSWORD, "Test@123")
+        self.type(self.USERNAME, "test123")
+        self.type(self.PASSWORD, "test123")
+        self.type(self.CONFIRM_PASSWORD, "test123")
 
     def submit(self):
         self.click(self.REGISTER_BUTTON)
